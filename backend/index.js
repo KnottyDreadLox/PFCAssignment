@@ -35,13 +35,14 @@ app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "../frontend/index.html"));
 });
 
-app.get("/login", (req, res) => {
-  res.sendFile(path.join(__dirname, "../frontend/login.html"));
+app.get("/account", (req, res) => {
+  res.sendFile(path.join(__dirname, "../frontend/account.html"));
 });
 
-app.get("/register", (req, res) => {
-  res.sendFile(path.join(__dirname, "../frontend/register.html"));
+app.get("/convert", (req, res) => {
+  res.sendFile(path.join(__dirname, "../frontend/convert.html"));
 });
+
 
 
 //console.log(secretToken);
