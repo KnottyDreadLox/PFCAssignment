@@ -24,8 +24,11 @@ const config = {
 };
 
 const app = Express();
+app.use(Express.static(path.join(__dirname, "../frontend/public")));
+
 app.use(cors());
 app.use(session(config));
+
 
 const PORT = 80;
 let requests = 0;
@@ -41,6 +44,21 @@ app.get("/account", (req, res) => {
 
 app.get("/convert", (req, res) => {
   res.sendFile(path.join(__dirname, "../frontend/convert.html"));
+});
+
+app.get("/admin", (req, res) => {
+  res.sendFile(path.join(__dirname, "../frontend/admin.html"));
+});
+
+app.post("/adminlogin", (req, res) => {
+  const email = req.query.email;
+  const password = req.query.password;
+  requests++;
+  if (email == "test@test.com" && password == "123") {
+    res.send({ result: "success", email: "test@test.com", name: "David" });
+  } else {
+    res.send({ result: "fail" });
+  }
 });
 
 
