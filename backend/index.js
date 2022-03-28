@@ -1,38 +1,65 @@
 import Express from "express";
 import cors from "cors";
-import { v4 as uuid } from "uuid";
-import session from "express-session";
-import { CreateUser, GetUser, HashPassword, GOOGLE_APPLICATION_CREDENTIALS } from "./db.js";
-
+import https from "https";
 import { fileURLToPath } from "url";
 import path, { dirname } from "path";
-
-import https from "https";
-
 import { SecretManagerServiceClient } from "@google-cloud/secret-manager";
+
+const PORT = 80;
+const SECRET_MANAGER_CERT =
+  "projects/3469417017/secrets/PublicKey/versions/latest";
+const SECRET_MANAGER_PK =
+  "projects/3469417017/secrets/PrivateKey/versions/latest";
+
+const SECRET_MANAGER_GET_OUT_PDF =
+  "projects/3469417017/secrets/GetOutPDF/versions/latest";
+
+const sm = new SecretManagerServiceClient({
+  projectId: "programingforthecloud",
+  keyFilename: "./key.json",
+});
+
+const startServerEncrypted = async () => {
+  const [pub] = await sm.accessSecretVersion({
+    name: SECRET_MANAGER_CERT,
+  });
+
+  const [prvt] = await sm.accessSecretVersion({
+    name: SECRET_MANAGER_PK,
+  });
+
+  const sslOptions = {
+    key: prvt.payload.data.toString(),
+    cert: pub.payload.data.toString(),
+  };
+
+  https.createServer(sslOptions, app).listen(PORT, () => {
+    console.log("Secure Server Listening on port:" + PORT);
+  });
+};
+
+const startServer = () => {
+  app.listen(PORT, () => console.log("Server Listening on port: " + PORT));
+};
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
-//Session config
-const config = {
-  genid: (req) => uuid(),
-  secret: "keyboard cat",
-  cookie: {},
-  resave: false,
-  saveUninitialized: true,
-};
-
 const app = Express();
+//enabled http -> https redirection
+//app.enable("trust proxy");
+
+//serve static files
 app.use(Express.static(path.join(__dirname, "../frontend/public")));
 
+//allow cross-origin reqs
 app.use(cors());
-app.use(session(config));
 
+//redirect to https
+//app.use((req, res, next) => {
+//  req.secure ? next() : res.redirect("https://" + req.headers.host + req.url);
+//});
 
-const PORT = 80;
-let requests = 0;
-const secretToken = uuid();
 
 app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "../frontend/index.html"));
@@ -64,5 +91,10 @@ app.post("/adminlogin", (req, res) => {
 
 
 //console.log(secretToken);
+
+startServer();
+
+//startServerEncrypted();
+
 
 app.listen(PORT, () => console.log("Server Listening on port: " + PORT));

@@ -26,7 +26,7 @@
   </a>
   <a href="/account" class="w3-bar-item w3-button w3-padding-large w3-black">
     <i class="fa fa-eye w3-xxlarge"></i>
-    <p>Account</p>
+    <p>ACCOUNT</p>
   </a>
 </nav>
 
@@ -126,12 +126,12 @@
              <div class="container">
                <h3>Choose Amount: </h3>
 
-               <select name="credits" id="credits">
-                 <option value="a">ж 10</option>
-                 <option value="b">ж 20</option>
-                 <option value="c">ж 30</option>
-                 <option value="d">ж 40</option>
-               </select> 
+               <select>
+                  <% for (const i in dropdownVals) { %>
+                      <option value="<%= dropdownVals[i].ID %>"> <%= dropdownVals[i].Name %> </option>
+                  <% } %>
+                </select>
+
                <hr>
                <p>Total <span class="price" style="color:black"><b>$0</b></span></p>
              </div>

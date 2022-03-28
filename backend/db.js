@@ -13,18 +13,18 @@ const db = new Firestore({
 //Collection (Table)
 //Document (Row)
 //docRef selects the collection
-export async function CreateUser(name, surname, email, password) {
-  const docRef = db.collection("users").doc();
+
+export async function AddNewUser(email) {
+  const docRef = db.collection("userData").doc();
   return await docRef.set({
-    name: name,
-    surname: surname,
+    credits: 10,
     email: email,
-    password: HashPassword(password),
+    type: "user",
   });
 }
 
 export async function GetUser(email) {
-  const docRef = db.collection("users");
+  const docRef = db.collection("userData");
   const snapshot = await docRef.where("email", "==", email).get();
   let data = [];
   snapshot.forEach((doc) => {
@@ -36,4 +36,19 @@ export async function GetUser(email) {
 export function HashPassword(password) {
   const secret = "PFCA$$S!GNM3NT";
   return createHmac("sha256", password).update(secret).digest("hex");
+}
+
+export async function AddDocument(collection, data) {
+  const docRef = db.collection(collection).doc();
+  return await docRef.set(data);
+}
+
+export async function GetDocument(collection, valueType, value) {
+  const docRef = db.collection(collection);
+  const snapshot = await docRef.where(valueType, "==", value).get();
+  let data = [];
+  snapshot.forEach((doc) => {
+    data.push(doc.data());
+  });
+  return data;
 }
