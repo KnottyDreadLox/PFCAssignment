@@ -6,7 +6,7 @@ export const GOOGLE_APPLICATION_CREDENTIALS = "./key.json";
 
 //Instantiating Firestore with project details
 const db = new Firestore({
-  projectId: "pfcassignment-343614",
+  projectId: "programingforthecloud",
   keyFilename: GOOGLE_APPLICATION_CREDENTIALS,
 });
 
@@ -23,6 +23,7 @@ export async function AddNewUser(email) {
   });
 }
 
+  
 export async function GetUser(email) {
   const docRef = db.collection("userData");
   const snapshot = await docRef.where("email", "==", email).get();
@@ -46,9 +47,23 @@ export async function AddDocument(collection, data) {
 export async function GetDocument(collection, valueType, value) {
   const docRef = db.collection(collection);
   const snapshot = await docRef.where(valueType, "==", value).get();
+
   let data = [];
   snapshot.forEach((doc) => {
     data.push(doc.data());
   });
+
+  return data;
+}
+
+export async function GetAllFromCollection(collection){
+  const docRef = db.collection(collection);
+  const snapshot = await docRef.get();
+
+  let data = [];
+  snapshot.forEach(doc => {
+    data.push(doc.data());
+  });
+
   return data;
 }

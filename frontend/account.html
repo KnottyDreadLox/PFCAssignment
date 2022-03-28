@@ -124,13 +124,10 @@
          
            <div class="col-25">
              <div class="container">
-               <h3>Choose Amount: </h3>
+              <h3>Choose Amount: </h3>
 
-               <select>
-                  <% for (const i in dropdownVals) { %>
-                      <option value="<%= dropdownVals[i].ID %>"> <%= dropdownVals[i].Name %> </option>
-                  <% } %>
-                </select>
+              <select id="token_dropdown">
+              </select>
 
                <hr>
                <p>Total <span class="price" style="color:black"><b>$0</b></span></p>
@@ -141,6 +138,7 @@
    </div>
     </div>
    </section>
+
 </body>
 
  
