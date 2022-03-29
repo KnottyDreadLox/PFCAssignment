@@ -5,6 +5,11 @@ import { fileURLToPath } from "url";
 import path, { dirname } from "path";
 import { SecretManagerServiceClient } from "@google-cloud/secret-manager";
 
+import {
+  GetAllFromCollection,
+  AddNewUser
+} from "./db.js";
+
 const PORT = 80;
 const SECRET_MANAGER_CERT =
   "projects/3469417017/secrets/PublicKey/versions/latest";
@@ -60,14 +65,25 @@ app.use(cors());
 //  req.secure ? next() : res.redirect("https://" + req.headers.host + req.url);
 //});
 
-
 app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "../frontend/index.html"));
+
 });
 
+
+
 app.get("/account", (req, res) => {
+  
+  GetAllFromCollection("tokens").then((r) =>{
+    r.forEach(element => {
+      console.log(element);
+    });
+    //console.log(r);
+  }).catch(e => console.log(e));
+
   res.sendFile(path.join(__dirname, "../frontend/account.html"));
-});
+});2
+
 
 app.get("/convert", (req, res) => {
   res.sendFile(path.join(__dirname, "../frontend/convert.html"));
@@ -97,4 +113,4 @@ startServer();
 //startServerEncrypted();
 
 
-app.listen(PORT, () => console.log("Server Listening on port: " + PORT));
+//app.listen(PORT, () => console.log("Server Listening on port: " + PORT));
