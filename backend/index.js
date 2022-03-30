@@ -1,3 +1,4 @@
+
 import Express from "express";
 import cors from "cors";
 import https from "https";
@@ -10,10 +11,18 @@ import {
   AddNewUser
 } from "./db.js";
 
-const SECRET_MANAGER_PK =  "projects/3469417017/secrets/PublicKey/versions/latest";
+import auth from "./routes/auth.js";
+import upload from "./routes/upload.js";
 
-const SECRET_MANAGER_GET_OUT_PDF =
-  "projects/3469417017/secrets/GetOutPDF/versions/latest";
+const DEV = true;
+const PORT = DEV ? 80 : 443;
+
+const SECRET_MANAGER_CERT = "projects/3469417017/secrets/PublicKey/versions/latest";
+const SECRET_MANAGER_PK =  "projects/3469417017/secrets/PublicKey/versions/latest";
+const SECRET_MANAGER_GET_OUT_PDF = "projects/3469417017/secrets/GetOutPDF/versions/latest";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 const sm = new SecretManagerServiceClient({
   projectId: "programingforthecloud",
@@ -70,8 +79,7 @@ const startServer = async () => {
   }
 };
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
+
 
 const app = Express();
 
@@ -99,16 +107,19 @@ app.get("/", (req, res) => {
 
 });
 
+app.use("/upload", upload);
+
+app.use("/auth", auth);
 
 
 app.get("/account", (req, res) => {
   
-  GetAllFromCollection("tokens").then((r) =>{
-    r.forEach(element => {
-      console.log(element);
-    });
-    //console.log(r);
-  }).catch(e => console.log(e));
+  // GetAllFromCollection("tokens").then((r) =>{
+  //   r.forEach(element => {
+  //     console.log(element);
+  //   });
+  //   //console.log(r);
+  // }).catch(e => console.log(e));
 
   res.sendFile(path.join(__dirname, "../frontend/account.html"));
 });2

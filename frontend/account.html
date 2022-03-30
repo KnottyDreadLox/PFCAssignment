@@ -12,71 +12,88 @@
 </head>
 <body class="w3-black">
 
-<!-- Icon Bar (Sidebar - hidden on small screens) -->
-<nav class="w3-sidebar w3-bar-block w3-small w3-hide-small w3-center">
-  <!-- Avatar image in top left corner -->
-  <img src="assets/images/PDFIcon.png" style="width:50%; margin: 20px;">
-  <a href="/" class="w3-bar-item w3-button w3-padding-large w3-hover-black">
-    <i class="fa fa-home w3-xxlarge"></i>
-    <p>HOME</p>
-  </a>
-  <a href="/convert" class="w3-bar-item w3-button w3-padding-large w3-hover-black">
-    <i class="fa fa-user w3-xxlarge"></i>
-    <p>CONVERT</p>
-  </a>
-  <a href="/account" class="w3-bar-item w3-button w3-padding-large w3-black">
-    <i class="fa fa-eye w3-xxlarge"></i>
-    <p>ACCOUNT</p>
-  </a>
-</nav>
+  <!-- Icon Bar (Sidebar - hidden on small screens) -->
+  <nav class="w3-sidebar w3-bar-block w3-small w3-hide-small w3-center">
+    <!-- Avatar image in top left corner -->
+    <img src="assets/images/PDFIcon.png" style="width:50%; margin: 20px;">
+    <a href="/" class="w3-bar-item w3-button w3-padding-large w3-hover-black">
+      <i class="fa fa-home w3-xxlarge"></i>
+      <p>HOME</p>
+    </a>
+    <a href="/convert" class="w3-bar-item w3-button w3-padding-large w3-hover-black">
+      <i class="fa fa-user w3-xxlarge"></i>
+      <p>CONVERT</p>
+    </a>
+    <a href="/account" class="w3-bar-item w3-button w3-padding-large w3-black">
+      <i class="fa fa-eye w3-xxlarge"></i>
+      <p>ACCOUNT</p>
+    </a>
+  </nav>
 
-<!-- Navbar on small screens (Hidden on medium and large screens) -->
-<div class="w3-top w3-hide-large w3-hide-medium" id="myNavbar">
-  <div class="w3-bar w3-black w3-opacity w3-hover-opacity-off w3-center w3-small">
-    <a href="/" class="w3-bar-item w3-button" style="width:25% !important">HOME</a>
-    <a href="/account" class="w3-bar-item w3-button" style="width:25% !important">ACCOUNT</a>
-    <a href="/convert" class="w3-bar-item w3-button" style="width:25% !important">CONVERT</a>
+  <!-- Navbar on small screens (Hidden on medium and large screens) -->
+  <div class="w3-top w3-hide-large w3-hide-medium" id="myNavbar">
+    <div class="w3-bar w3-black w3-opacity w3-hover-opacity-off w3-center w3-small">
+      <a href="/" class="w3-bar-item w3-button" style="width:25% !important">HOME</a>
+      <a href="/account" class="w3-bar-item w3-button" style="width:25% !important">ACCOUNT</a>
+      <a href="/convert" class="w3-bar-item w3-button" style="width:25% !important">CONVERT</a>
+    </div>
   </div>
-</div>
 
 
-<!-- Page Content -->
-<div class="w3-padding-large" id="main">
+  <!-- Page Content -->
+  <div class="w3-padding-large" id="main">
   <!-- Header/Home -->
   <header class="w3-container w3-padding-32 w3-center w3-black" id="home">
     <h1 class="w3-jumbo"><span class="w3-hide-small">Account</h1>
   </header>
 
-<!-- LOGIN BOX -->
-  <section>   
+
+
+
+  <!-- LOGIN BOX -->
+  <section>  
     <div class="row">
       <div class="wrapper login">
+        
         <div class="logincontainer">
+          
+
             <div class="col-left">
                 <div class="login-text">
                     <h2>Welcome Back</h2>
                     <p>Create your account.<br>It's totally free.</p>
-                    <a href="" class="loginbtn">Sign Up</a>
+                    <!-- <a href="" class="loginbtn">Sign Up</a> -->
                 </div>
             </div>
 
-            <div class="col-right">
+            <div class="col-right" id="signInContainer" style="display:none">
                 <div class="login-form">
-                    <h2>Login</h2>
+                    <h2 style="color: black;">Login</h2>
                     <form action="">
                       <br><br>
                       <p>Already have an account ?</p>
-                        <p>
-                            <input  id="signIn" type="submit" value="Sign In">
+                        <!-- <p>
+                            <input  id="signin" type="submit" value="Sign In">                        
+                        </p> -->
+                        <p style="color: black;">
+                          <a id="signIn" href="#">Sign In</a>
                         </p>
                         <p>
                             <a href="">Forget password?</a>
                         </p>
-
                     </form>
                 </div>
             </div>
-
+            <div>        
+              <div id="profile" class="nav-item dropdown" style="display: none">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="color: white"></a>
+                <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink" >
+                  <li>
+                    <a class="dropdown-item" id="signOut" href="#">Sign Out</a>
+                  </li>
+                </ul>
+              </div>
+            </div> 
         </div>
     </div>
   </section>
@@ -146,7 +163,7 @@
         
                  </div>
                  <label>
-                   <input type="checkbox" checked="checked" name="sameadr"> Shipping address same as billing
+                   <input type="checkbox" checked="checked" name="sameadr"> Shipping address same as billing</label>
                  </label>
                  <input type="submit" value="Continue to checkout" class="btn">
                </form>
@@ -164,11 +181,11 @@
                <p>Total <span class="price" style="color:black"><b>$0</b></span></p>
              </div>
            </div>
-         </div> 
+      </div> 
 
-   </div>
     </div>
-   </section>
+  </div>
+  </section>
 
 </body>
 
@@ -183,7 +200,10 @@
 
 
 <footer>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
   <script src="./assets/js/account.js"></script>
+  <script src="https://apis.google.com/js/platform.js?onload=loadGoogleLogin" async defer></script>
 </footer>
 
 </html>

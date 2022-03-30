@@ -39,3 +39,6 @@ document.querySelectorAll(".drop-zone__input").forEach((inputElement) => {
       thumbnailElement.style.backgroundImage = null;
     }
   } 
+
+  
+  
