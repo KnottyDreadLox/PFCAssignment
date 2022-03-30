@@ -14,7 +14,7 @@ import {
 import auth from "./routes/auth.js";
 import upload from "./routes/upload.js";
 
-const DEV = true;
+const DEV = false;
 const PORT = DEV ? 80 : 443;
 
 const SECRET_MANAGER_CERT = "projects/3469417017/secrets/PublicKey/versions/latest";
