@@ -49,10 +49,24 @@
   <body>
     <div class="w3-padding-large" id="main">
 
-      <div class="drop-zone">
-        <span class="drop-zone__prompt">Drop file here or click to upload</span>
-        <input type="file" accept="image/*" id="fileInput" name="myFile" class="drop-zone__input">
+      <div class="flex-container">
+
+        <div>
+          <div class="drop-zone" style="float: left; width: 100%;">
+            <span class="drop-zone__prompt">Drop file here or click to upload</span>
+            <input type="file" accept="image/*" id="fileInput" name="myFile" class="drop-zone__input">
+          </div>  
+        </div>
+        <div>
+          <div class="loader" style="margin-top: 20%;"></div>
+        </div>
+
+        <div>
+          <button class="btn btn-primary" id="downloadBtn"></button>
+        </div>
+
       </div>
+
 
       <div style="margin: 5vh;">
         <button id="convert"  type="button" class="btn btn-primary" onclick="uploadFile()">Convert</button>
@@ -61,6 +75,7 @@
       <script src="assets/js/dragndrop.js"></script>
       <script src="assets/js/fileupload.js"></script>
     </div>
+
 
   </body>
 
