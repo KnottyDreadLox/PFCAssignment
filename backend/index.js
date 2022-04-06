@@ -17,8 +17,9 @@ import upload from "./routes/upload.js";
 const DEV = true;
 const PORT = DEV ? 80 : 443;
 
+
 const SECRET_MANAGER_CERT = "projects/3469417017/secrets/PublicKey/versions/latest";
-const SECRET_MANAGER_PK =  "projects/3469417017/secrets/PublicKey/versions/latest";
+const SECRET_MANAGER_PK =  "projects/3469417017/secrets/PrivateKey/versions/latest";
 const SECRET_MANAGER_GET_OUT_PDF = "projects/3469417017/secrets/GetOutPDF/versions/latest";
 
 const __filename = fileURLToPath(import.meta.url);
@@ -49,7 +50,7 @@ const startServerEncrypted = async () => {
 };
 
 
-export let PDF_API_KEY = "";
+export let PDF_API_KEY = "bbc48d858053d012377e073d47e1193b54cbc7335341ab95a28de8558651b69f";
 
 const startServer = async () => {
   //Load GetOutPDF API Key
@@ -71,6 +72,7 @@ const startServer = async () => {
       cert: pub.payload.data.toString(),
     };
 
+    //console.log(sslOptions)
     https.createServer(sslOptions, app).listen(PORT, () => {
       console.log("Secure Server Listening on port:" + PORT);
     });

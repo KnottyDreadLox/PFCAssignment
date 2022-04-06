@@ -2,6 +2,10 @@ let signInButton = document.getElementById("signIn");
 let signOutButton = document.getElementById("signOut");
 let profile = document.getElementById("profile");
 let signInContainer = document.getElementById("signInContainer");
+let loginBox = document.getElementById("LoginBox");
+let payBox = document.getElementById("PayBox");
+
+
 
 const authenticateReq = async (token) => {
   const url = `/auth?token=${token}`;
@@ -19,6 +23,8 @@ const authenticateReq = async (token) => {
     const expiry = response.data.expiry;
     profile.style.display = "inline";
     signInContainer.style.display = "none";
+    loginBox.style.display = "none";
+    payBox.style.display = "block";
 
     document.getElementById("navbarDropdownMenuLink").innerHTML =
       `<img
@@ -36,6 +42,8 @@ const authenticateReq = async (token) => {
   } else {
     profile.style.display = "none";
     signInContainer.style.display = "inline";
+    payBox.style.display = "none";
+
   }
 };
 

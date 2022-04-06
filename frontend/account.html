@@ -28,6 +28,7 @@
       <i class="fa fa-eye w3-xxlarge"></i>
       <p>ACCOUNT</p>
     </a>
+
   </nav>
 
   <!-- Navbar on small screens (Hidden on medium and large screens) -->
@@ -48,11 +49,9 @@
   </header>
 
 
-
-
   <!-- LOGIN BOX -->
   <section>  
-    <div class="row">
+    <div class="row" id="LoginBox">
       <div class="wrapper login">
         
         <div class="logincontainer">
@@ -84,26 +83,26 @@
                     </form>
                 </div>
             </div>
-            <div>        
-              <div id="profile" class="nav-item dropdown" style="display: none">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="color: white"></a>
-                <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink" >
-                  <li>
-                    <a class="dropdown-item" id="signOut" href="#">Sign Out</a>
-                  </li>
-                </ul>
-              </div>
-            </div> 
         </div>
     </div>
   </section>
 
 
 
+  <div>        
+    <div id="profile" class="nav-item dropdown" style="display: none">
+      <a href="#" id="navbarDropdownMenuLink"  aria-expanded="false" style="color: white"></a>
+      <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink" >
+        <li>
+          <a class="dropdown-item" id="signOut" href="#">Sign Out</a>
+        </li>
+      </ul>
+    </div>
+  </div> 
   <!-- PAY -->
 
   <section>
-    <div class="container pt-3 pb-3 mt-3 mb-3" style="margin-top: 5vh; display:block;">
+    <div class="container pt-3 pb-3 mt-3 mb-3" id="PayBox" style="margin-top: 5vh; display:none;">
         <div class="row">
           <div class="col-75">
             <div class="container">

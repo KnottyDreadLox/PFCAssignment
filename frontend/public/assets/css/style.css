@@ -468,9 +468,12 @@ form {
 
 
 #downloadBtn{
-  width: 20vh; 
-  height: 20vh; 
+  width: 300px;
+  height: 300px;
   margin: 50px; 
-  background-image: url(assets/images/PDFIcon.png);
+  background-color: transparent;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
 }
   
