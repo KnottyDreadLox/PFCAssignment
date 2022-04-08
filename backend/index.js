@@ -13,6 +13,7 @@ import {
 
 import auth from "./routes/auth.js";
 import upload from "./routes/upload.js";
+import home from "./routes/home.js"
 
 const DEV = true;
 const PORT = DEV ? 80 : 443;

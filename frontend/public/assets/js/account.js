@@ -25,6 +25,9 @@ const authenticateReq = async (token) => {
     signInContainer.style.display = "none";
     loginBox.style.display = "none";
     payBox.style.display = "block";
+    document.getElementById("CreditTxt").style.display = "inline";
+
+
 
     document.getElementById("navbarDropdownMenuLink").innerHTML =
       `<img
@@ -36,13 +39,19 @@ const authenticateReq = async (token) => {
     alt=""
     loading="lazy"
   />` + name;
+
     document.getElementById("picture").src = picture;
-    document.cookie = `token=${token};expires=${expiry}`;
+    let date = new Date();
+    date.setTime(date.getTime() + expiry);
+    document.cookie = `token=${token};expires=${date.toUTCString()}`;
     console.log(`${name} signed in successfully.`);
+
   } else {
+    //if not logged in
     profile.style.display = "none";
     signInContainer.style.display = "inline";
     payBox.style.display = "none";
+    document.getElementById("CreditTxt").style.display = "none";
 
   }
 };

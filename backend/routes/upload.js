@@ -55,7 +55,9 @@ upload.route("/").post(imageUpload.single("image"), (req, res) => {
     const filePath = req.file.path;
 
     // The new ID for your GCS file
-    const destFileName = 'uploads/uploadedFile';
+    const uploadFileName = 'uploads/' + req.file.filename;
+    const convertedFileName = 'completed/' + req.file.filename + '_converted';
+
 
     // Creates a client
 
@@ -66,7 +68,7 @@ upload.route("/").post(imageUpload.single("image"), (req, res) => {
 
     async function uploadFile() {
       await storage.bucket(bucketName).upload(filePath, {
-        destination: destFileName,
+        destination: uploadFileName,
       });
 
       console.log(`${filePath} uploaded to ${bucketName}`);
@@ -94,7 +96,20 @@ upload.route("/").post(imageUpload.single("image"), (req, res) => {
         api_key: SECRET_MANAGER_GET_OUT_PDF,
         image: encoded
       }
-    }).then(res => res.data).catch(err => console.error(err));
+    }).then(res => {
+
+      console.log(res);
+      async function uploadFromMemory() {
+        await storage.bucket(bucketName).file(convertedFileName).save(res);
+      
+        console.log(
+          `${convertedFileName} with contents ${res} uploaded to ${bucketName}.`
+        );
+      }
+      
+      uploadFromMemory().catch(console.error);
+
+    }).catch(err => console.error(err));
 
     console.log(convertedData);
     
