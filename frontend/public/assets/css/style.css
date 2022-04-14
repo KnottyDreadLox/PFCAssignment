@@ -206,7 +206,7 @@ form {
 
 .drop-zone {
   max-width: 400px;
-  height: 400px;
+  height: 50vh;
   padding: 25px;
   display: flex;
   align-items: center;

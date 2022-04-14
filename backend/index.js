@@ -8,7 +8,8 @@ import { SecretManagerServiceClient } from "@google-cloud/secret-manager";
 
 import {
   GetAllFromCollection,
-  AddNewUser
+  AddNewUser,
+  GetDocument
 } from "./db.js";
 
 import auth from "./routes/auth.js";
@@ -117,15 +118,15 @@ app.use("/auth", auth);
 
 app.get("/account", (req, res) => {
   
-  // GetAllFromCollection("tokens").then((r) =>{
-  //   r.forEach(element => {
-  //     console.log(element);
-  //   });
-  //   //console.log(r);
-  // }).catch(e => console.log(e));
+  GetDocument("userData", "email", "spliterlenny@gmail.com" ).then((r) =>{
+    r.forEach(element => {
+      console.log(element.credits);
+    });
+    //console.log(r);
+  }).catch(e => console.log(e));
 
   res.sendFile(path.join(__dirname, "../frontend/account.html"));
-});2
+});
 
 
 

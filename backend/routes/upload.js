@@ -6,6 +6,9 @@ import path, { dirname } from "path";
 import { SecretManagerServiceClient } from "@google-cloud/secret-manager";
 import { Storage } from '@google-cloud/storage';
 import axios from 'axios';
+import fs from 'fs';
+import { Console } from "console";
+
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -48,18 +51,10 @@ upload.route("/").post(imageUpload.single("image"), (req, res) => {
 
     // --------------------- Send to Google Cloud ---------------------
 
-    // The ID of your GCS bucket
     const bucketName = 'programingforthecloud.appspot.com';
-
-    // The path to your file to upload
     const filePath = req.file.path;
-
-    // The new ID for your GCS file
-    const uploadFileName = 'uploads/' + req.file.filename;
-    const convertedFileName = 'completed/' + req.file.filename + '_converted';
-
-
-    // Creates a client
+    const uploadFileName = 'uploads/uploaded_' + req.file.filename;
+    const convertedFileName = 'completed/converted_' + req.file.filename;
 
     const storage = new Storage({
       projectId: "programingforthecloud",
@@ -78,44 +73,40 @@ upload.route("/").post(imageUpload.single("image"), (req, res) => {
 
     //--------------------- Convert to base64 ---------------------
 
-    const encoded = Buffer.from(req.file.path).toString('base64')
-    console.log(encoded)
+    const base64 = fs.readFileSync(req.file.path, "base64");
 
     //--------------------- Send to PDF Conversion API ---------------------
 
-    //const axios = require("axios");
 
     const BASE_URL = `https://getoutpdf.com/api/convert/image-to-pdf`
 
     const SECRET_MANAGER_GET_OUT_PDF = "projects/3469417017/secrets/GetOutPDF/versions/latest";
 
     const convertedData = axios({
-      method: 'post',
+      method: 'POST',
       url: BASE_URL,
-      headers: {
-        api_key: SECRET_MANAGER_GET_OUT_PDF,
-        image: encoded
+      data: {
+        api_key: "bbc48d858053d012377e073d47e1193b54cbc7335341ab95a28de8558651b69f",
+        image: base64
       }
     }).then(res => {
 
-      console.log(res);
+
+      const pdfBase = res.data.pdf_base64
+      const convertedBuffer = Buffer.from(pdfBase, 'base64').toString();
+
       async function uploadFromMemory() {
-        await storage.bucket(bucketName).file(convertedFileName).save(res);
+        await storage.bucket(bucketName).file(convertedFileName).save(convertedBuffer);
       
         console.log(
-          `${convertedFileName} with contents ${res} uploaded to ${bucketName}.`
+          `${convertedFileName} with contents ${convertedBuffer} uploaded to ${bucketName}.`
         );
       }
       
       uploadFromMemory().catch(console.error);
 
     }).catch(err => console.error(err));
-
-    console.log(convertedData);
     
-
-    //--------------------- Error ---------------------
-
     res.send({
       status: "200",
       message: "File uploaded successfully! Processing..",
@@ -124,3 +115,4 @@ upload.route("/").post(imageUpload.single("image"), (req, res) => {
 });
 
 export default upload;
+

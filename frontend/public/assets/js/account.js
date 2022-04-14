@@ -4,6 +4,8 @@ let profile = document.getElementById("profile");
 let signInContainer = document.getElementById("signInContainer");
 let loginBox = document.getElementById("LoginBox");
 let payBox = document.getElementById("PayBox");
+let creditTxt = document.getElementById("creditTxt");
+
 
 
 
