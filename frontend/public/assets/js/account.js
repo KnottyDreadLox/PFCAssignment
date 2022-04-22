@@ -7,8 +7,6 @@ let payBox = document.getElementById("PayBox");
 let creditTxt = document.getElementById("creditTxt");
 
 
-
-
 const authenticateReq = async (token) => {
   const url = `/auth?token=${token}`;
   const headers = {
@@ -23,13 +21,14 @@ const authenticateReq = async (token) => {
     const email = response.data.email;
     const picture = response.data.picture;
     const expiry = response.data.expiry;
+
+    const credits = response.data.credits;
+
     profile.style.display = "inline";
     signInContainer.style.display = "none";
     loginBox.style.display = "none";
     payBox.style.display = "block";
-    document.getElementById("CreditTxt").style.display = "inline";
-
-
+    creditTxt.style.display = "inline";
 
     document.getElementById("navbarDropdownMenuLink").innerHTML =
       `<img
@@ -47,14 +46,13 @@ const authenticateReq = async (token) => {
     date.setTime(date.getTime() + expiry);
     document.cookie = `token=${token};expires=${date.toUTCString()}`;
     console.log(`${name} signed in successfully.`);
-
+    creditTxt.textContent = "You have " + credits + " credits."
   } else {
     //if not logged in
     profile.style.display = "none";
     signInContainer.style.display = "inline";
     payBox.style.display = "none";
-    document.getElementById("CreditTxt").style.display = "none";
-
+    creditTxt.style.display = "none";
   }
 };
 

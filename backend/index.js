@@ -6,14 +6,9 @@ import { fileURLToPath } from "url";
 import path, { dirname } from "path";
 import { SecretManagerServiceClient } from "@google-cloud/secret-manager";
 
-import {
-  GetAllFromCollection,
-  AddNewUser,
-  GetDocument
-} from "./db.js";
-
 import auth from "./routes/auth.js";
 import upload from "./routes/upload.js";
+import convert from "./routes/convert.js";
 import home from "./routes/home.js"
 
 const DEV = true;
@@ -26,6 +21,7 @@ const SECRET_MANAGER_GET_OUT_PDF = "projects/3469417017/secrets/GetOutPDF/versio
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
+var userTokens;
 
 const sm = new SecretManagerServiceClient({
   projectId: "programingforthecloud",
@@ -115,15 +111,10 @@ app.use("/upload", upload);
 
 app.use("/auth", auth);
 
+app.use("/convert", convert);
+
 
 app.get("/account", (req, res) => {
-  
-  GetDocument("userData", "email", "spliterlenny@gmail.com" ).then((r) =>{
-    r.forEach(element => {
-      console.log(element.credits);
-    });
-    //console.log(r);
-  }).catch(e => console.log(e));
 
   res.sendFile(path.join(__dirname, "../frontend/account.html"));
 });
