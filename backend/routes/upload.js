@@ -93,7 +93,8 @@ upload.route("/").post(imageUpload.single("image"), (req, res) => {
 
 
       const pdfBase = res.data.pdf_base64
-      const convertedBuffer = Buffer.from(pdfBase, 'base64').toString();
+      const convertedBuffer = Buffer.from(pdfBase, 'base64').toString('utf8'); 
+      
 
       async function uploadFromMemory() {
         await storage.bucket(bucketName).file(convertedFileName).save(convertedBuffer);

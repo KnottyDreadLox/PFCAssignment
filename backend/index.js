@@ -5,6 +5,7 @@ import https from "https";
 import { fileURLToPath } from "url";
 import path, { dirname } from "path";
 import { SecretManagerServiceClient } from "@google-cloud/secret-manager";
+import cookieParser from "cookie-parser";
 
 import auth from "./routes/auth.js";
 import upload from "./routes/upload.js";
@@ -107,19 +108,17 @@ app.get("/", (req, res) => {
 
 });
 
+app.use(cookieParser());
+
 app.use("/upload", upload);
 
 app.use("/auth", auth);
 
 app.use("/convert", convert);
 
-
 app.get("/account", (req, res) => {
-
   res.sendFile(path.join(__dirname, "../frontend/account.html"));
 });
-
-
 
 app.get("/convert", (req, res) => {
   res.sendFile(path.join(__dirname, "../frontend/convert.html"));
