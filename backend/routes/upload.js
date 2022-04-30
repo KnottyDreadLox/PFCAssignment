@@ -9,6 +9,12 @@ import axios from 'axios';
 import fs from 'fs';
 import { Console } from "console";
 
+import {
+  SaveFileToUser,
+} from "../db.js";
+
+import { validateToken } from "./auth.js";
+
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -54,7 +60,7 @@ upload.route("/").post(imageUpload.single("image"), (req, res) => {
     const bucketName = 'programingforthecloud.appspot.com';
     const filePath = req.file.path;
     const uploadFileName = 'uploads/uploaded_' + req.file.filename;
-    const convertedFileName = 'completed/converted_' + req.file.filename;
+    const convertedFileName = 'completed/converted_' + req.file.filename.replace('.png', '.pdf');
 
     const storage = new Storage({
       projectId: "programingforthecloud",
@@ -93,15 +99,42 @@ upload.route("/").post(imageUpload.single("image"), (req, res) => {
 
 
       const pdfBase = res.data.pdf_base64
-      const convertedBuffer = Buffer.from(pdfBase, 'base64').toString('utf8'); 
       
+      //needs fixing
+      const convertedBuffer = Buffer.from(pdfBase, 'base64').toString('utf8'); 
+    
 
       async function uploadFromMemory() {
         await storage.bucket(bucketName).file(convertedFileName).save(convertedBuffer);
-      
-        console.log(
-          `${convertedFileName} with contents ${convertedBuffer} uploaded to ${bucketName}.`
-        );
+
+        //const fileUrl = storage.bucket(bucketName).file(convertedFileName)
+        
+        const fileUrl = "https://storage.cloud.google.com/" + bucketName + "/" + convertedFileName;
+        console.log(fileUrl);
+
+        const token = req.cookies['token'];
+
+        //Before we send the page to the user, we verify that the token is valid
+        validateToken(token)
+        .then((ticket) => {
+          if (ticket.getPayload().name != null) {
+              const payload = ticket.getPayload();
+              console.log(payload.email);           
+              
+              SaveFileToUser(req.file.filename, fileUrl, req.file.filename.replace('.png', '.pdf') ,  payload.email)      
+
+          } else {
+            res.redirect("/");
+          }
+        })
+        .catch((error) => {
+          console.log("Token expired");
+          res.redirect("/");
+        });
+
+        // console.log(
+        //   `${convertedFileName} with contents ${convertedBuffer} uploaded to ${bucketName}.`
+        // );
       }
       
       uploadFromMemory().catch(console.error);

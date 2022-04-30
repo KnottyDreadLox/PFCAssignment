@@ -23,6 +23,16 @@ export async function AddNewUser(email) {
   });
 }
 
+export async function SaveFileToUser(name, url, convertedName, email) {
+  const docRef = db.collection("conversions").doc();
+  return await docRef.set({
+    email: email,
+    filename: name,
+    convertedName: convertedName,
+    link: url,
+  });
+}
+
   
 export async function GetUser(email) {
   const docRef = db.collection("userData");
