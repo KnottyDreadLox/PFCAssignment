@@ -121,7 +121,7 @@ upload.route("/").post(imageUpload.single("image"), (req, res) => {
               const payload = ticket.getPayload();
               console.log(payload.email);           
               
-              SaveFileToUser(req.file.filename, fileUrl, req.file.filename.replace('.png', '.pdf') ,  payload.email)      
+              SaveFileToUser(req.file.filename, fileUrl,  payload.email)      
 
           } else {
             res.redirect("/");

@@ -6,7 +6,6 @@ let loginBox = document.getElementById("LoginBox");
 let payBox = document.getElementById("PayBox");
 let creditTxt = document.getElementById("creditTxt");
 
-
 const authenticateReq = async (token) => {
   const url = `/auth?token=${token}`;
   const headers = {
@@ -24,6 +23,8 @@ const authenticateReq = async (token) => {
 
     const credits = response.data.credits;
 
+    const JsonData = response.data.JsonData;
+
     profile.style.display = "inline";
     signInContainer.style.display = "none";
     loginBox.style.display = "none";
@@ -39,7 +40,26 @@ const authenticateReq = async (token) => {
     height="25"
     alt=""
     loading="lazy"
-  />` + name;
+    />` + name;
+    
+    //Add URL links to USER account details
+
+    var stringify = JSON.parse(JsonData);
+    for (var i = 0; i < stringify.length; i++) {
+        console.log(stringify[i]['link']);
+    }
+    
+    stringify.forEach(element => {
+      document.getElementById("userDownloads").innerHTML +=
+      `<div style="background-color: cornflowerblue; padding:10px; margin:5px">` +
+      `<p>NAME</p>` + JSON.stringify(element['filename']) +
+      `<p>URL</p>` + JSON.stringify(element['link']) +
+      `</div>` ;          
+    });
+
+    console.log("Json: " + stringify);
+
+
 
     document.getElementById("picture").src = picture;
     let date = new Date();
@@ -55,6 +75,7 @@ const authenticateReq = async (token) => {
     creditTxt.style.display = "none";
   }
 };
+
 
 async function loadGoogleLogin() {
   let session = document.cookie;
@@ -101,4 +122,5 @@ async function loadGoogleLogin() {
       }
     );
   });
+
 }

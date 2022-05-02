@@ -53,15 +53,30 @@ auth.route("/").post((req, res) => {
             }).catch(e => console.log(e));
           }else{
             r.forEach(element => {
-              res.send({
-                status: "200",
-                name: payload.name,
-                email: payload.email,
-                picture: payload.picture,
-                token: token,
-                expiry: payload.exp,
-                credits: element.credits,
-              });
+              GetDocument("conversions", "email", payload.email).then((x)=>{
+
+                var myData = [];
+                x.forEach(_element => {
+                  myData.push(x)
+                });
+
+                console.log(myData[0])
+
+                //console.log(JSON.stringify(myData));
+
+                res.send({
+                  status: "200",
+                  name: payload.name,
+                  email: payload.email,
+                  picture: payload.picture,
+                  token: token,
+                  expiry: payload.exp,
+                  credits: element.credits,
+                  JsonData: JSON.stringify(myData[0])
+                });
+
+              }).catch(e => console.log(e));
+
             });    
         }    
         console.log(`${payload.name} has logged in.`);
