@@ -60,7 +60,7 @@ auth.route("/").post((req, res) => {
                   myData.push(x)
                 });
 
-                console.log(myData[0])
+                //console.log(myData[0])
 
                 //console.log(JSON.stringify(myData));
 

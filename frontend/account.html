@@ -174,7 +174,7 @@
                  <label>
                    <input type="checkbox" checked="checked" name="sameadr"> Shipping address same as billing</label>
                  </label>
-                 <input type="submit" value="Continue to checkout" class="btn">
+                 <input id="buyBtn" value="Continue to checkout" class="btn">
                </form>
              </div>
            </div>
@@ -182,12 +182,14 @@
            <div class="col-25">
              <div class="container">
               <h3>Choose Amount: </h3>
-
-              <select id="token_dropdown">
-              </select>
+              
+            <select name="credits" id="token_dropdown">
+              <option value="Ten">$10 : ж10</option>
+              <option value="Twenty">$20 : ж15</option>
+              <option value="Thirty">$30 : ж20</option>
+            </select>
 
                <hr>
-               <p>Total <span class="price" style="color:black"><b>$0</b></span></p>
              </div>
            </div>
       </div> 

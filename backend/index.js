@@ -11,6 +11,10 @@ import auth from "./routes/auth.js";
 import upload from "./routes/upload.js";
 import convert from "./routes/convert.js";
 import home from "./routes/home.js"
+import admin from "./routes/admin.js"
+import clean from "./routes/clean.js"
+
+
 
 const DEV = true;
 const PORT = DEV ? 80 : 443;
@@ -116,6 +120,10 @@ app.use("/auth", auth);
 
 app.use("/convert", convert);
 
+app.use("/admin", admin);
+
+app.use("/clean", clean);
+
 app.get("/account", (req, res) => {
   res.sendFile(path.join(__dirname, "../frontend/account.html"));
 });
@@ -127,19 +135,6 @@ app.get("/convert", (req, res) => {
 app.get("/admin", (req, res) => {
   res.sendFile(path.join(__dirname, "../frontend/admin.html"));
 });
-
-app.post("/adminlogin", (req, res) => {
-  const email = req.query.email;
-  const password = req.query.password;
-  requests++;
-  if (email == "test@test.com" && password == "123") {
-    res.send({ result: "success", email: "test@test.com", name: "David" });
-  } else {
-    res.send({ result: "fail" });
-  }
-});
-
-
 
 //console.log(secretToken);
 

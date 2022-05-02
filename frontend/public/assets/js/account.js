@@ -41,6 +41,11 @@ const authenticateReq = async (token) => {
     alt=""
     loading="lazy"
     />` + name;
+
+    const button = document.getElementById('buyBtn');
+    button.addEventListener('click', function(e) {
+      console.log('button was clicked');
+    });
     
     //Add URL links to USER account details
 

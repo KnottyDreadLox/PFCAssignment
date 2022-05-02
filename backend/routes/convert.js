@@ -24,7 +24,7 @@ convert.route("/").get((req, res) =>{
       .then((ticket) => {
         if (ticket.getPayload().name != null) {
             const payload = ticket.getPayload();
-            console.log(payload);
+            //console.log(payload);
 
             // GetDocument("userData", "email", payload.email).then((r) =>{
             //     r.forEach(element => {
